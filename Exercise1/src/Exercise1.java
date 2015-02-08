@@ -17,7 +17,7 @@ import java.io.*;
  *      Enter the output file name: OutFile
  *      Files merged!
  */
-public class Exercise1 extends JFrame {
+public class Exercise1 {
 
     // main function
     public static void main(String[] args) {
@@ -39,15 +39,15 @@ public class Exercise1 extends JFrame {
         }
     }
 
-    static void writeFileToFile(String firstFile, File toFile) {
+    static void writeFileToFile(String inputFile, File toFile) {
         try {
-            BufferedReader inFile = new BufferedReader(new FileReader("firstFile"));
-            FileWriter fileWriter = new FileWriter(toFile);
+            BufferedReader inFile = new BufferedReader(new FileReader(inputFile));
+            FileWriter fileWriter = new FileWriter(toFile, true);
             String nextLine;
-
             while((nextLine = inFile.readLine()) != null) {
                 fileWriter.write(nextLine + "\n");
             }
+            fileWriter.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
