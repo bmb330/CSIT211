@@ -39,15 +39,18 @@ public class Exercise2 {
         BufferedReader inFile;
         String nextLine;
 
-        if (args.length != 1) {
+        /*if (args.length != 1) {
             System.err.println("Usage: java Exercise2 filename");
             System.exit(1);
-        }
+        }*/
+
+
         states = getStateList("states.txt");
         addressList = new ArrayList<Address>();
 
         try {
-            inFile = new BufferedReader(new FileReader(args[0]));
+            //inFile = new BufferedReader(new FileReader(args[0]));
+            inFile = new BufferedReader(new FileReader("inputaddresses.txt"));
 
             while ((nextLine = inFile.readLine()) != null) {
                 nextAddress = createAddress(tokenizeAddress(nextLine));
@@ -98,10 +101,12 @@ public class Exercise2 {
     protected static ArrayList<String> tokenizeAddress(String line) {
         // returns StringTokenizer containing the tokenized address
         ArrayList<String> address;
+        StringTokenizer strtk;
 
         address = new ArrayList<String>();
+        strtk = new StringTokenizer(line, ",");
 
-        for (String s : line.split(",")) {
+        /*for (String s : line.split(",")) {
             if (s.matches("\\d+\\s+\\w+") || s.matches("\\w+\\s+\\d+")) {
                 for (String splitString : s.split("\\s+", 2)) {
                     address.add(splitString);
@@ -110,6 +115,17 @@ public class Exercise2 {
             else {
                 address.add(s);
             }
+        }*/
+
+        for (int i = 0; i < 3; i++) {
+            if (i == 1) {
+                address.add(strtk.nextToken());
+            }
+            else {
+                for (String s : strtk.nextToken().split("\\s+", 2)) {
+                    address.add(s);
+                }
+            }
         }
 
         return address;
@@ -117,7 +133,9 @@ public class Exercise2 {
 
     protected static Address createAddress(ArrayList<String> address) {
         Address finalAddress = new Address();
-
+        for (String s : address) {
+            System.out.println(s);
+        }
         if (address.get(0).matches("\\d+")) {
             finalAddress.streetNumber = address.get(0);
         }
