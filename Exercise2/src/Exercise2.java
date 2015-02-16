@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.*;
 import java.util.*;
 
 /**
@@ -21,11 +22,20 @@ import java.util.*;
  * Input line format:
  *      StreetNumber StreetName, CityName, State ZipCode
  */
+
 public class Exercise2 {
-    
+    static class Address {
+        public String streetNumber;
+        public String streetName;
+        public String cityName;
+        public String stateName;
+        public String zipCode;
+    }
 
     public static void main(String[] args) {
         ArrayList<String> states;
+        Address nextAddress;
+        ArrayList<Address> addressList;
         BufferedReader inFile;
         String nextLine;
 
@@ -34,12 +44,19 @@ public class Exercise2 {
             System.exit(1);
         }
         states = getStateList("states.txt");
+        addressList = new ArrayList<Address>();
 
         try {
             inFile = new BufferedReader(new FileReader(args[0]));
 
             while ((nextLine = inFile.readLine()) != null) {
-                addAddress(nextLine);
+                nextAddress = createAddress(tokenizeAddress(nextLine));
+                if (stateValid(nextAddress)) {
+                    addressList.add(nextAddress);
+                }
+                else {
+                    System.err.println("State '" + nextAddress.stateName + "' is not a valid state.");
+                }
             }
 
             inFile.close();
@@ -98,5 +115,45 @@ public class Exercise2 {
         return address;
     }
 
-    protected static
+    protected static Address createAddress(ArrayList<String> address) {
+        Address finalAddress = new Address();
+
+        if (address.get(0).matches("\\d+")) {
+            finalAddress.streetNumber = address.get(0);
+        }
+        else {
+            finalAddress.streetNumber = "";
+        }
+        if (address.get(1).matches("\\w+(\\s*\\w*)")) {
+            finalAddress.stateName = address.get(1);
+        }
+        else {
+            finalAddress.streetName = "";
+        }
+        if (address.get(2).matches("\\w+(\\s*\\w+)")) {
+            finalAddress.cityName = address.get(2);
+        }
+        else {
+            finalAddress.cityName = "";
+        }
+        if (address.get(3).matches("\\w+(\\s*\\w*)")) {
+            finalAddress.stateName = address.get(3);
+        }
+        else {
+            finalAddress.stateName = "";
+        }
+        if (address.get(4).matches("\\d+")) {
+            finalAddress.zipCode = address.get(4);
+        }
+        else {
+            finalAddress.zipCode = "";
+        }
+
+        return finalAddress;
+    }
+
+    protected static boolean stateValid(Address address) {
+        // returns true if address valid
+        return false;
+    }
 }
