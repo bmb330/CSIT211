@@ -54,7 +54,7 @@ public class Exercise2 {
 
             while ((nextLine = inFile.readLine()) != null) {
                 nextAddress = createAddress(tokenizeAddress(nextLine));
-                if (stateValid(nextAddress)) {
+                if (stateValid(nextAddress, states)) {
                     addressList.add(nextAddress);
                 }
                 else {
@@ -99,7 +99,7 @@ public class Exercise2 {
     }
 
     protected static ArrayList<String> tokenizeAddress(String line) {
-        // returns StringTokenizer containing the tokenized address
+        // returns ArrayList<String> containing the tokenized address
         ArrayList<String> address;
         StringTokenizer strtk;
 
@@ -119,11 +119,11 @@ public class Exercise2 {
 
         for (int i = 0; i < 3; i++) {
             if (i == 1) {
-                address.add(strtk.nextToken());
+                address.add(strtk.nextToken().trim());
             }
             else {
-                for (String s : strtk.nextToken().split("\\s+", 2)) {
-                    address.add(s);
+                for (String s : strtk.nextToken().trim().split("\\s+", 2)) {
+                    address.add(s.trim());
                 }
             }
         }
@@ -133,9 +133,7 @@ public class Exercise2 {
 
     protected static Address createAddress(ArrayList<String> address) {
         Address finalAddress = new Address();
-        for (String s : address) {
-            System.out.println(s);
-        }
+
         if (address.get(0).matches("\\d+")) {
             finalAddress.streetNumber = address.get(0);
         }
@@ -170,8 +168,11 @@ public class Exercise2 {
         return finalAddress;
     }
 
-    protected static boolean stateValid(Address address) {
+    protected static boolean stateValid(Address address, ArrayList<String> states) {
         // returns true if address valid
+
+        if (states.contains(address.stateName.toUpperCase()))
+            return true;
         return false;
     }
 }
