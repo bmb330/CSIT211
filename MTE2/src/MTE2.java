@@ -14,6 +14,9 @@ import java.util.*;
  * Insertion sort must be used to sort these numbers.)
  *
  * The program is expected to generate 4 lines as its output.
+ *
+ * Conclusion:
+ * Insertion Sort on LinkedList is 10 times slower than ArrayList.
  */
 public class MTE2 {
     public static void main(String[] args) {
@@ -31,7 +34,7 @@ public class MTE2 {
         cpuTimeStart = System.currentTimeMillis();
 
         for (int i = 0; i < 100000; i++) {
-            insert(numbersArryList, r.nextInt());
+            insertSort(numbersArryList, r.nextInt());
         }
         cpuTimeEnd = System.currentTimeMillis();
 
@@ -46,7 +49,7 @@ public class MTE2 {
         cpuTimeStart = System.currentTimeMillis();
 
         for (int i = 0; i < 100000; i++) {
-            insert(numbersLinkList, r.nextInt());
+            insertSort(numbersLinkList, r.nextInt());
         }
         cpuTimeEnd = System.currentTimeMillis();
 
@@ -57,7 +60,7 @@ public class MTE2 {
                 (cpuTimeEnd - cpuTimeStart));
     }
 
-    static void insert(List<Integer> nList, Integer number) {
+    protected static void insertSort(List<Integer> nList, Integer number) {
         if (nList.size() < 1) {
             nList.add(number);
         }
@@ -65,6 +68,7 @@ public class MTE2 {
         for (Integer i : nList) {
             if (i.intValue() > number.intValue()) {
                 nList.add(index, number);
+                break;
             }
             ++index;
         }
