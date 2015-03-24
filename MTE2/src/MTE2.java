@@ -76,4 +76,20 @@ public class MTE2 {
             nList.add(number);
         }
     }
+
+    static int[] countTwos(int[] arr) {
+        int[] results = new int[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            // check if power of 2
+            if ((arr[i] & (arr[i]-1) == 0) {
+                results[i] = 1;
+            }
+            else {
+                results[i] = 0;
+            }
+        }
+        return results;
+
+    }
 }
