@@ -6,10 +6,15 @@ import java.util.*;
  */
 public class Qz2 {
     public static void main(String[] args) {
+        Map<Integer, List<Book>> hmap;
+        int year;
 
+        hmap = createMap("books.txt");
+        year = Integer.parseInt(getUserInput("Which publish year are you looking for"));
+        printBookByYear(hmap, year);
     }
 
-    static Map<Integer, List<Book>> createMap(String bookFile) {
+    private static Map<Integer, List<Book>> createMap(String bookFile) {
         BufferedReader inFile;
         String nextLine;
         int counter = 0;
@@ -28,6 +33,9 @@ public class Qz2 {
                     book = new Book(Integer.parseInt(temp[0]), "", Integer.parseInt(temp[1]), "");
                     if (!hmap.containsKey(book.getYear())) {
                         hmap.put(book.getYear(), new ArrayList<Book>());
+                        hmap.get(book.getYear()).add(book);
+                    }
+                    else {
                         hmap.get(book.getYear()).add(book);
                     }
                 }
@@ -53,5 +61,24 @@ public class Qz2 {
         }
 
         return hmap;
+    }
+
+    private static void printBookByYear(Map<Integer, List<Book>> bookList, int year) {
+        for(Book book : (bookList.get(year))) {
+            System.out.println(book.getID() + " " + book.getTitle() + " " + book.getYear() + " " + book.getAuthor());
+        }
+    }
+
+    private static String getUserInput(String question) {
+        String value = null;
+        try {
+            BufferedReader bufferedRead;
+            System.out.println(question + ": ");
+            bufferedRead = new BufferedReader(new InputStreamReader(System.in));
+            value = bufferedRead.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return value;
     }
 }
